@@ -1,6 +1,6 @@
 # @arijitgupta/geo-simplify
 
-Geographic polyline simplification using iterative Douglas–Peucker and spherical point-to-segment deviation.
+Geographic polyline simplification using iterative Douglas–Peucker and spherical point-to-segment deviation. The package has no runtime dependencies and accepts decimal-degree or DMS coordinates.
 
 ## Install
 
@@ -26,9 +26,9 @@ const result = simplifyDouglasPeucker(route, 8); // coordinates + retainedIndice
 - `simplifyPolyline(coordinates, toleranceMeters)`: return simplified decimal-degree vertices.
 - `simplifyDouglasPeucker(coordinates, toleranceMeters)`: return vertices and their indices in the input.
 
-The algorithm is iterative (no recursive call-stack growth). Deviation is measured as spherical distance to the nearest point on the minor great-circle arc between retained endpoints. It uses a spherical Earth radius of 6,371,000 m, not an ellipsoidal geodesic. The first and last vertices are always retained. Empty and short paths are validated and returned unchanged. Output order is stable.
+The algorithm is iterative (no recursive call-stack growth). Deviation is measured as spherical distance to the nearest point on the minor great-circle arc between retained endpoints. It uses a spherical Earth radius of 6,371,000 m, not an ellipsoidal geodesic. First and last vertices are always retained. Empty and short paths are validated and returned unchanged. Output order is stable.
 
-Tolerance must be finite and non-negative, and is measured in meters. Coordinates are validated and normalized through `geo-core`.
+Tolerance must be finite and non-negative, and is measured in meters. Decimal-degree and DMS coordinates are range-validated and normalized before processing. Near-antipodal segment endpoints have no unique minor arc; for these degenerate segments the implementation falls back to the nearer endpoint distance.
 
 ## Development
 
