@@ -1,6 +1,4 @@
-export type { Coordinate, CoordinateInput } from "@arijitgupta/geo-core";
-/** Result contains simplified decimal-degree vertices and their source indices. */
-export interface SimplifyResult {
-    coordinates: import("@arijitgupta/geo-core").Coordinate[];
-    retainedIndices: number[];
-}
+import type { Coordinate, DMSCoordinate } from "@arijitgupta/geo-distance";
+export type { Coordinate, DMSCoordinate } from "@arijitgupta/geo-distance";
+export type CoordinateInput = Coordinate | DMSCoordinate;
+export interface SimplifyResult { coordinates: Coordinate[]; retainedIndices: number[]; }
