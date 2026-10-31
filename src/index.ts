@@ -1,7 +1,3 @@
-/**
- * Public entry point.
- *
- * The public API will be added after the package's scope and contracts are
- * established. Shared geographic primitives come from @arijitgupta/geo-core.
- */
-export {};
+export type { Coordinate, CoordinateInput } from "@arijitgupta/geo-core";
+export type { SimplifyResult } from "./types.js";
+export { simplifyDouglasPeucker, simplifyPolyline } from "./douglasPeucker.js";

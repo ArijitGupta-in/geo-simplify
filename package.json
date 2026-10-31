@@ -1,7 +1,7 @@
 {
     "name": "@arijitgupta/geo-simplify",
-    "version": "0.1.0",
-    "description": "Simplify geographic paths while controlling geometric deviation.",
+    "version": "0.2.0",
+    "description": "Geographic polyline simplification using spherical point-to-segment deviation.",
     "type": "module",
     "repository": {
         "type": "git",
@@ -25,13 +25,14 @@
     "publishConfig": {
         "access": "public"
     },
+    "sideEffects": false,
     "scripts": {
         "build": "tsc",
         "test": "vitest run",
         "test:coverage": "vitest run --coverage",
         "check": "tsc --noEmit && tsc --noEmit -p tsconfig.test.json",
         "lint:md": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
-        "prepublishOnly": "npm run check && npm run test:coverage && npm run build"
+        "prepublishOnly": "npm run check && npm test && npm run build"
     },
     "keywords": [
         "geo",
@@ -39,14 +40,12 @@
         "simplification",
         "simplify",
         "polyline",
-        "Douglas-Peucker",
-        "Visvalingam",
-        "coordinates"
+        "Douglas-Peucker"
     ],
     "author": "Arijit Gupta",
     "license": "MIT",
     "dependencies": {
-        "@arijitgupta/geo-core": "^1.0.0"
+        "@arijitgupta/geo-core": "^1.1.0"
     },
     "devDependencies": {
         "@vitest/coverage-v8": "^4.1.11",

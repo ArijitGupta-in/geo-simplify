@@ -1,35 +1,38 @@
 # @arijitgupta/geo-simplify
 
-A lightweight TypeScript library for reducing the number of coordinates in geographic paths while controlling geometric deviation.
+Geographic polyline simplification using iterative Douglas–Peucker and spherical point-to-segment deviation.
 
-This package is in its initial scaffold stage. Supported algorithms, distance models, tolerance semantics, and the public API will be defined through design issues before implementation.
+## Install
 
-## Planned scope
+```bash
+npm install @arijitgupta/geo-simplify
+```
 
-The library will focus on geometric simplification of ordered geographic paths. Candidate approaches include Douglas–Peucker (Ramer–Douglas–Peucker) and Visvalingam–Whyatt. Their suitability for geographic coordinates, antimeridian-crossing paths, and high-latitude data must be evaluated before selection.
+## Example
 
-Simplification should preserve path order and document what its tolerance means. No algorithm or tolerance unit is committed yet.
+```ts
+import { simplifyDouglasPeucker, simplifyPolyline } from "@arijitgupta/geo-simplify";
+const route = [
+    { latitude: 22.5726, longitude: 88.3639 },
+    { latitude: 22.573, longitude: 88.3642 },
+    { latitude: 22.574, longitude: 88.365 },
+];
+const compact = simplifyPolyline(route, 8); // tolerance in meters
+const result = simplifyDouglasPeucker(route, 8); // coordinates + retainedIndices
+```
 
-## Coordinate model
+## API
 
-Shared coordinate types, DMS conversion, normalization, and validation are provided by [`@arijitgupta/geo-core`](https://www.npmjs.com/package/@arijitgupta/geo-core).
+- `simplifyPolyline(coordinates, toleranceMeters)`: return simplified decimal-degree vertices.
+- `simplifyDouglasPeucker(coordinates, toleranceMeters)`: return vertices and their indices in the input.
+
+The algorithm is iterative (no recursive call-stack growth). Deviation is measured as spherical distance to the nearest point on the minor great-circle arc between retained endpoints. It uses a spherical Earth radius of 6,371,000 m, not an ellipsoidal geodesic. The first and last vertices are always retained. Empty and short paths are validated and returned unchanged. Output order is stable.
+
+Tolerance must be finite and non-negative, and is measured in meters. Coordinates are validated and normalized through `geo-core`.
 
 ## Development
 
-Requires Node.js 22.12+ and npm 10+.
-
-```bash
-npm install
-npm test
-npm run test:coverage
-npm run check
-npm run lint:md
-npm run build
-```
-
-## Status
-
-Under initial development. No stable public API has been released.
+Requires Node.js 22.12+ and npm 10+. Run `npm install`, `npm test`, `npm run check`, `npm run build`, and `npm run lint:md`.
 
 ## License
 
